@@ -2,6 +2,14 @@
 
 This is a simple Node.js deployed on an AWS EC2 instance using Docker and Terraform.
 
+### Options considered:
+
+| Option | Kubernetes? | Free? | Difficulty |
+|--------|-------------|-------|------------|
+| EC2 + Docker | ❌ | ✅ | Easy |
+| EC2 + k3s     | ✅ | ✅ | Medium |
+| EKS           | ✅ | ❌ | Easy-ish but costs money |
+
 ## Pre-requisites
 * AWS account with Free Tier access
 * AWS IAM user with programmatic access & EC2 permissions
