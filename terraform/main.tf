@@ -29,11 +29,25 @@ resource "aws_security_group" "bestagon_sg" {
   }
 }
 
+data "aws_ami" "amazon_linux2" {
+  owners      = ["amazon"]
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+  filter {
+    name   = "state"
+    values = ["available"]
+  }
+}
+
 #################################
 # EC2 Instance
 #################################
 resource "aws_instance" "bestagon_server" {
-  ami                    = "ami-0c02fb55956c7d316"  # Amazon Linux 2 in eu-central-1
+  ami                    = data.aws_ami.amazon_linux2.id
   instance_type          = "t2.micro"
 
   key_name               = var.key_name

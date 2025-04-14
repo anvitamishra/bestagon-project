@@ -1,5 +1,6 @@
 # Node.js
 /app/node_modules/
+/app/.env
 
 # Terraform
 .terraform/
@@ -7,3 +8,7 @@ terraform.tfstate
 terraform.tfstate.*
 terraform.tfvars
 *.tfvars
+
+# System Files
+.env
+.DS_Store
