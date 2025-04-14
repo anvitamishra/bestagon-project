@@ -1,3 +1,9 @@
 # Node.js
 /app/node_modules/
 
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+terraform.tfvars
+*.tfvars
