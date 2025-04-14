@@ -27,6 +27,14 @@ resource "aws_security_group" "bestagon_sg" {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
   }
+
+  ingress {
+    description = "Allow SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 data "aws_ami" "amazon_linux2" {
@@ -47,8 +55,9 @@ data "aws_ami" "amazon_linux2" {
 # EC2 Instance
 #################################
 resource "aws_instance" "bestagon_server" {
-  ami                    = data.aws_ami.amazon_linux2.id
-  instance_type          = "t2.micro"
+  ami                         = data.aws_ami.amazon_linux2.id
+  instance_type               = "t2.micro"
+  associate_public_ip_address = true
 
   key_name               = var.key_name
   security_groups        = [aws_security_group.bestagon_sg.name]
