@@ -39,7 +39,9 @@ export AWS_DEFAULT_REGION=eu-central-1
 ```sh
 cd terraform
 terraform init
-terraform apply
+terraform apply \
+  -var="key_name=your-key-pair-name" \
+  -var="image_url=ghcr.io/YOUR_USERNAME/bestagon-project:latest"
 ```
 
 4. Access app on http://`<public-ip>`/hello in your browser.
