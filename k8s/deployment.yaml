@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bestagon-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bestagon
+  template:
+    metadata:
+      labels:
+        app: bestagon
+    spec:
+      containers:
+      - name: bestagon
+        image: bestagon-project
+        imagePullPolicy: Never # Don't try to pull this image from Docker Hub, just use what we have locally
+        ports:
+        - containerPort: 3000
