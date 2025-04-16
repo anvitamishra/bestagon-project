@@ -5,6 +5,7 @@
 ### Pre-requisites
 * minikube installed (`brew install minikube`)
 * `kubectl` installed (`brew install kubectl`)
+* `psql` installed (`brew install postgresql`)
 
 ### Deployment Steps
 
@@ -31,6 +32,16 @@ kubectl get all
 5. Access the app with:
 ```
 minikube service bestagon-service
+```
+
+6. Test postgresql connectivity with an ephemeral pod:
+```sh
+kubectl run psql-client \
+  --rm -it \
+  --image=postgres:15 \
+  --env="PGPASSWORD=bestagonpass" \
+  --command -- \
+  psql -h postgres -U bestagonuser -d bestagon -c "\l"
 ```
 
 ### Cleanup
