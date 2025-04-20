@@ -18,3 +18,14 @@ spec:
         imagePullPolicy: Never # Don't try to pull this image from Docker Hub, just use what we have locally
         ports:
         - containerPort: 3000
+        env:
+        - name: PGHOST
+          value: "postgres"
+        - name: PGPORT
+          value: "5432"
+        - name: PGDATABASE
+          value: "bestagon"
+        - name: PGUSER
+          value: "bestagonuser"
+        - name: PGPASSWORD
+          value: "bestagonpass"

@@ -1,5 +1,7 @@
 # The Bestagon Project
 
+Simple Node.js app for tracking your bananas.
+
 ## Minikube Setup
 
 ### Pre-requisites
@@ -24,17 +26,22 @@ eval $(minikube docker-env)
 docker build -t bestagon-project ./app
 ```
 
-4. Check resources are deployed:
+4. Deploy manifests:
+```sh
+kubectl apply -f k8s/
+```
+
+5. Check resources are deployed:
 ```sh
 kubectl get all
 ```
 
-5. Access the app with:
+6. Access the app with:
 ```
 minikube service bestagon-service
 ```
 
-6. Test postgresql connectivity with an ephemeral pod:
+7. Test postgresql connectivity with an ephemeral pod:
 ```sh
 kubectl run psql-client \
   --rm -it \
@@ -56,12 +63,44 @@ Full minikube reset:
 minikube delete
 ```
 
+### Development
+
+#### Send a request to the API
+
+```sh
+curl -X POST -H "Content-Type: application/json" \
+  -d '{"name":"Plantain","ripe":true}' \
+  $(minikube service bestagon-service --url)/bananas
+```
+
+#### Accessing the DB
+
+Port forward the postgres service:
+```sh
+kubectl port-forward svc/postgres 5432:5432
+```
+
+In another terminal, run:
+```sh
+psql postgresql://bestagonuser:bestagonpass@localhost:5432/bestagon
+```
+
+Now you can run `psql` client commands like:
+```
+\dt	          -- List tables in the current database
+\q	          -- Quit psql
+```
+
+Read rows:
+```
+SELECT * FROM bananas;
+```
 
 ---
 
-## AWS EC2 Setup with Docker
+## [Deprecated] AWS EC2 Setup with Docker
 
-This is a simple Node.js deployed on an AWS EC2 instance using Docker and Terraform.
+Simple Node.js app deployed on an AWS EC2 instance using Docker and Terraform.
 
 ### Pre-requisites
 * AWS account with Free Tier access
