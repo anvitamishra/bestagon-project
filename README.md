@@ -45,10 +45,10 @@ minikube service bestagon-service
 ```sh
 kubectl run psql-client \
   --rm -it \
-  --image=postgres:15 \
+  --image=postgres:17-alpine \
   --env="PGPASSWORD=bestagonpass" \
   --command -- \
-  psql -h postgres -U bestagonuser -d bestagon -c "\l"
+  psql -h postgres-service -U bestagonuser -d bestagon -c "\l"
 ```
 
 ### Cleanup
@@ -77,7 +77,7 @@ curl -X POST -H "Content-Type: application/json" \
 
 Port forward the postgres service:
 ```sh
-kubectl port-forward svc/postgres 5432:5432
+kubectl port-forward svc/postgres-service 5432:5432
 ```
 
 In another terminal, run:
