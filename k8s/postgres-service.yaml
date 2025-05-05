@@ -1,12 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
+  name: postgres-service
 spec:
-  type: ClusterIP
+  # Headless service
+  # - There is no load balancing happening here behind one single IP
+  # - The Headless Service just returns the IPs of the individual pods so they can be individually discovered
+  clusterIP: None # Headless service
   selector:
     app: postgres
   ports:
-  - name: postgresql
-    port: 5432
+  - port: 5432
     targetPort: 5432

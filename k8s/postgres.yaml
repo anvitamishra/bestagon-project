@@ -1,0 +1,45 @@
+# k8s/postgres.yaml
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  # headless service to expose the stateful set outside of cluster
+  serviceName: postgres-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  # Add readiness and liveness probes
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:17-alpine #light-weight
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: bestagon
+        - name: POSTGRES_USER
+          value: bestagonuser
+        - name: POSTGRES_PASSWORD
+          value: bestagonpass
+        volumeMounts:
+        - name: postgres-disk
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates: # creates one PVC per pod, don't need a separate PVC configuration
+  - metadata:
+      name: postgres-disk
+    spec:
+      accessModes: [ "ReadWriteOnce" ] #each pod gets its own disk and only that pod can read/write
+      # define what kind of storage backend to use
+      # minkube comes with "standard"
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 1Gi
