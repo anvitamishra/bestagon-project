@@ -6,6 +6,8 @@ spec:
   # Headless service
   # - There is no load balancing happening here behind one single IP
   # - The Headless Service just returns the IPs of the individual pods so they can be individually discovered
+  # Service is like pod DNS
+  # Why do we need to pods
   clusterIP: None # Headless service
   selector:
     app: postgres
