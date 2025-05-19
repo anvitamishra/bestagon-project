@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bestagon-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1 # replace into this # this is what my API will get
+spec:
+  rules:
+  - host: bestagon.local
+    http:
+      paths:
+      - path: /api/(.*) # incoming request
+        pathType: Prefix
+        backend:
+          service:  # my app
+            name: bestagon-service
+            port:
+              number: 80 # my service's port

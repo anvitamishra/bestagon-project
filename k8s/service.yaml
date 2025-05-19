@@ -3,11 +3,18 @@ kind: Service
 metadata:
   name: bestagon-service
 spec:
-  type: NodePort
+  type: LoadBalancer # NodePort
   selector:
     app: bestagon
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 3000
-    nodePort: 30080
+    targetPort: 3000 # pod port
+    # nodePort: 30080 # ?????
+
+# The actual loadbalancer is created in the cloud provider/ environment.
+# k8s calls the cloud provider's API for this.
+
+# Minikube just fakes that behavior by rerouting traffic manually (minikube tunnel does this)
+
+# Load Balancer -

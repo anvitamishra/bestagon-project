@@ -51,6 +51,20 @@ kubectl run psql-client \
   psql -h postgres-service -U bestagonuser -d bestagon -c "\l"
 ```
 
+8. Ingress
+```sh
+minikube addons enable ingress
+echo "$(minikube ip) bestagon.local" | sudo tee -a /etc/hosts
+```
+OR
+
+Loadbalancer config (in service)
+```sh
+kubectl get svc bestagon-service
+
+curl http://<EXTERNAL-IP>/hello
+```
+
 ### Cleanup
 
 K8s only:
